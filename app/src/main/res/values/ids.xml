@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cardView_left" type="id" />
+    <item name="button_left" type="id" />
+    <item name="cardView_right" type="id" />
+    <item name="button_right" type="id" />
+    <item name="linear_divider" type="id" />
+
+    <item name="guideline_top" type="id" />
+    <item name="guideline_bottom" type="id" />
+    <item name="guideline_divider" type="id" />
+</resources>
