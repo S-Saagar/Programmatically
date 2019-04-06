@@ -19,9 +19,21 @@ public class LayoutHelper {
 
         layoutParams.setMargins(layoutHelperBuilder.margin_start, layoutHelperBuilder.margin_top, layoutHelperBuilder.margin_end, layoutHelperBuilder.margin_bottom);
 
+        layoutParams.goneTopMargin = layoutHelperBuilder.gone_margin_top;
+        layoutParams.goneBottomMargin = layoutHelperBuilder.gone_margin_bottom;
+        layoutParams.goneStartMargin = layoutHelperBuilder.gone_margin_start;
+        layoutParams.goneEndMargin = layoutHelperBuilder.gone_margin_end;
+
         layoutParams.width = layoutHelperBuilder.width;
         layoutParams.height = layoutHelperBuilder.height;
 
+        if (layoutHelperBuilder.v_bias > -1) {
+            layoutParams.verticalBias = layoutHelperBuilder.v_bias;
+        }
+
+        if (layoutHelperBuilder.h_bias > -1) {
+            layoutParams.horizontalBias = layoutHelperBuilder.h_bias;
+        }
 
         if (layoutHelperBuilder.orientation > -1) {
             layoutParams.orientation = layoutHelperBuilder.orientation;
@@ -84,6 +96,10 @@ public class LayoutHelper {
         //Default value -1 for check set or not
         private float guidePercent = -1;
 
+        //Default value -1 for check set or not
+        private float v_bias = -1;
+        private float h_bias = -1;
+
         private int height, width;
         private boolean is_set_height;
         private boolean is_set_width;
@@ -110,6 +126,7 @@ public class LayoutHelper {
 
         //Default margins are Zero
         private int margin_start = 0, margin_end = 0, margin_top = 0, margin_bottom = 0;
+        private int gone_margin_start = 0, gone_margin_end = 0, gone_margin_top = 0, gone_margin_bottom = 0;
 
         LayoutHelperBuilder(@NonNull View view) {
             this.view = view;
@@ -138,6 +155,15 @@ public class LayoutHelper {
             this.margin_end = end;
             this.margin_top = top;
             this.margin_bottom = bottom;
+            return this;
+        }
+
+        @Override
+        public Build goneMargins(int start, int end, int top, int bottom) {
+            this.gone_margin_start = start;
+            this.gone_margin_end = end;
+            this.gone_margin_top = top;
+            this.gone_margin_bottom = bottom;
             return this;
         }
 
@@ -199,6 +225,16 @@ public class LayoutHelper {
             return this;
         }
 
+        public Build verticalBias(float bias) {
+            this.v_bias = bias;
+            return this;
+        }
+
+        public Build horizontalBias(float bias) {
+            this.h_bias = bias;
+            return this;
+        }
+
         public Build constraintRation(String ref, String width, String height) {
             this.ratio = rationStringBuilder(ref, width, height);
             return this;
@@ -236,6 +272,8 @@ public class LayoutHelper {
     public interface Build {
         Build margins(int start, int end, int top, int bottom);
 
+        Build goneMargins(int start, int end, int top, int bottom);
+
         Build topToTopOf(int id);
 
         Build bottomToBottomOf(int id);
@@ -257,6 +295,10 @@ public class LayoutHelper {
         Build guideLineOrientation(@IntRange(from = 0, to = 1) int orientation);
 
         Build guideLineGuidePercent(@FloatRange(from = 0.0, to = 1.0) float guidePercent);
+
+        Build verticalBias(@FloatRange(from = 0.0, to = 1.0) float bias);
+
+        Build horizontalBias(@FloatRange(from = 0.0, to = 1.0) float bias);
 
         void build();
     }
